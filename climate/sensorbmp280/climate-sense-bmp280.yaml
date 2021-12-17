@@ -1,0 +1,69 @@
+substitutions:
+  name: climate-sense-bmp280
+  friendly_name: Temp Humidity Pressure Sensor
+
+esphome:
+  name: "${name}"
+  name_add_mac_suffix: true
+  platform: ESP8266
+  board: wio_node
+
+  on_boot:
+    output.turn_on: grove_power
+
+  
+# This should point to the public location of this yaml file.
+dashboard_import:
+  package_import_url: github://jonnywifi/esphome/sensorbmp280/climate-sense-bmp280.yaml
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+i2c:
+#  sda: D2
+#  scl: D1
+  scan: true
+
+ota:
+  password: "bf78c2a325dc6dccedd2e96c304d1fb8"
+
+wifi:
+  # ssid: 'YOURSSID'
+  # password: 'YOURWIFIPASSWORD'
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: ${name}
+    password: "12345678"
+
+captive_portal:
+
+# Sleep to reduce the thermal impact of the MCU so close ot the sensor
+deep_sleep:
+  run_duration: 30s
+  sleep_duration: 5min
+
+sensor:
+  - platform: bme280
+    temperature:
+      name: "Temperature"
+      oversampling: 16x
+    pressure:
+      name: "Pressure"
+    humidity:
+      name: "Humidity"
+    address: 0x76
+    update_interval: 10s
+
+output:
+  - platform: gpio
+    pin: 15
+    inverted: false
+    id: grove_power
+#    name: Red LED Grove Pwr
+#    restore_mode: RESTORE_DEFAULT_ON
+
+
