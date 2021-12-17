@@ -15,7 +15,7 @@ esphome:
   # configuration and updates.
   project:
     name: esphome."${name}"
-    version: "0.1"
+    version: "0.2"
   
 # This should point to the public location of this yaml file.
 dashboard_import:
@@ -47,9 +47,9 @@ wifi:
 captive_portal:
 
 # Sleep to reduce the thermal impact of the MCU so close ot the sensor
-# deep_sleep:
-#   run_duration: 30s
-#   sleep_duration: 5min
+deep_sleep:
+  run_duration: 30s
+  sleep_duration: 5min
 
 sensor:
   - platform: bme280
