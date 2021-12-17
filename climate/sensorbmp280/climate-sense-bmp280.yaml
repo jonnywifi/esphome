@@ -14,7 +14,7 @@ esphome:
   
 # This should point to the public location of this yaml file.
 dashboard_import:
-  package_import_url: github://jonnywifi/esphome/sensorbmp280/climate-sense-bmp280.yaml
+  package_import_url: github://jonnywifi/esphome/climate/sensorbmp280/climate-sense-bmp280.yaml
 
 # Enable logging
 logger:
