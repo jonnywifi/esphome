@@ -11,6 +11,11 @@ esphome:
   on_boot:
     output.turn_on: grove_power
 
+  # This will allow for (future) project identification,
+  # configuration and updates.
+  project:
+    name: esphome."${name}"
+    version: "0.1"
   
 # This should point to the public location of this yaml file.
 dashboard_import:
