@@ -30,8 +30,8 @@ esphome:
   # This will allow for (future) project identification,
   # configuration and updates.
   project:
-      name: jonnywifi.badgereader
-      version: "0.1"
+      name: esphome.badgereader
+      version: "0.2"
 
   # If buzzer is enabled, notify on api connection success
   on_boot:
