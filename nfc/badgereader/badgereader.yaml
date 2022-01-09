@@ -14,7 +14,7 @@ wifi:
 captive_portal:
 
 dashboard_import:
-    package_import_url: github://jonnywifi/nfc/badgereader/badgereader.yaml
+    package_import_url: github://jonnywifi/esphome/nfc/badgereader/badgereader.yaml
 
 improv_serial:
 
