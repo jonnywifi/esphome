@@ -15,7 +15,7 @@ esphome:
   # configuration and updates.
   project:
     name: esphome."${name}"
-    version: "0.3"
+    version: "0.4"
   
 # This should point to the public location of this yaml file.
 dashboard_import:
@@ -54,12 +54,12 @@ deep_sleep:
 sensor:
   - platform: bme280
     temperature:
-      name: Temperature: "${name}"
+      name: ${name} Temperature
       oversampling: 16x
     pressure:
-      name: Pressure: "${name}"
+      name: ${name} Pressure
     humidity:
-      name: Humidity: "${name}"
+      name: ${name} Humidity
     address: 0x76
     update_interval: 10s
 
