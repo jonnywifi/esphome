@@ -3,7 +3,7 @@ substitutions:
   friendly_name: Temp Humidity Pressure Sensor
 
 esphome:
-  name: "${name}"
+  name: ${name}
   name_add_mac_suffix: true
   platform: ESP8266
   board: wio_node
@@ -14,7 +14,7 @@ esphome:
   # This will allow for (future) project identification,
   # configuration and updates.
   project:
-    name: esphome."${name}"
+    name: esphome.climate-sense-bmp280
     version: "0.5"
   
 # This should point to the public location of this yaml file.
