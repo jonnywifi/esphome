@@ -3,7 +3,7 @@ substitutions:
   friendly_name: Temp Humidity Pressure Sensor
 
 esphome:
-  name: ${name}
+  name: "${name}"
   name_add_mac_suffix: true
   platform: ESP8266
   board: wio_node
@@ -33,7 +33,6 @@ i2c:
   scan: true
 
 ota:
-  password: "bf78c2a325dc6dccedd2e96c304d1fb8"
 
 wifi:
   # ssid: 'YOURSSID'
@@ -68,5 +67,4 @@ output:
     pin: 15
     inverted: false
     id: grove_power
-#    name: Red LED Grove Pwr
-#    restore_mode: RESTORE_DEFAULT_ON
+    
