@@ -34,7 +34,7 @@ esphome:
 
 # Enable logging
 logger:
-  level: WARN  # Reduce logging level
+  level: DEBUG  # WARN  # Reduce logging level
 
 # Enable Home Assistant API
 api:
