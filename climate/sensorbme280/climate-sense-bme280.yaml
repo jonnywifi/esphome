@@ -31,11 +31,13 @@ i2c:
 
 # Uncomment the OTA section to enable OTA updates
 # ota:
-#   platform: esphome
 #   password: !secret ota_password
 #   on_begin:
 #     then:
 #       - deep_sleep.prevent: deep_sleep_control
+#   on_end:
+#     then:
+#       - deep_sleep.allow: deep_sleep_control
 
 wifi:
   ssid: !secret wifi_ssid
@@ -74,13 +76,3 @@ output:
     pin: 15
     inverted: false
     id: grove_power
-
-interval:
-  - interval: 60s
-    then:
-      - lambda: |-
-          if (id(deep_sleep_control).is_prevented) {
-            ESP_LOGD("main", "Deep sleep is prevented due to OTA.");
-          } else {
-            ESP_LOGD("main", "Deep sleep is enabled.");
-          }
