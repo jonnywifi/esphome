@@ -12,14 +12,7 @@ esphome:
     priority: -10
     then:
       - output.turn_on: grove_power
-      - homeassistant.service:
-          service: input_boolean.turn_on
-          data:
-            entity_id: input_boolean.block_esphome_sleep
       - delay: 5s  # Wait a few seconds to ensure Home Assistant is ready
-      - homeassistant.state:
-          id: block_sleep_state
-          entity_id: input_boolean.block_esphome_sleep
       - lambda: |-
           if (id(block_sleep_state).state == "on") {
             id(deep_sleep_control).prevent();
@@ -34,13 +27,19 @@ esphome:
 
 # Enable logging
 logger:
-  level: DEBUG  # WARN  # Reduce logging level
+  level: DEBUG # WARN  # Reduce logging level
 
 # Enable Home Assistant API
 api:
 
 homeassistant:
   # This will allow ESPHome to connect to Home Assistant and check the state of the virtual switch
+
+text_sensor:
+  - platform: homeassistant
+    name: "Block ESPHome Sleep State"
+    id: block_sleep_state
+    entity_id: input_boolean.block_esphome_sleep
 
 i2c:
   # sda: D2
