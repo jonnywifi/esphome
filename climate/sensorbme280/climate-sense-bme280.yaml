@@ -29,7 +29,9 @@ i2c:
   # scl: D1
   scan: false
 
+# Uncomment the OTA section to enable OTA updates
 # ota:
+#   platform: esphome
 #   password: !secret ota_password
 #   on_begin:
 #     then:
@@ -77,7 +79,7 @@ interval:
   - interval: 60s
     then:
       - lambda: |-
-          if (id(deep_sleep_control).is_prevented()) {
+          if (id(deep_sleep_control).is_prevented) {
             ESP_LOGD("main", "Deep sleep is prevented due to OTA.");
           } else {
             ESP_LOGD("main", "Deep sleep is enabled.");
