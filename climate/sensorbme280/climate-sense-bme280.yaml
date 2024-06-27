@@ -15,7 +15,7 @@ esphome:
 
   project:
     name: esphome.climate-sense-bme280
-    version: "0.7"
+    version: "0.6"
 
 # packages:
 #   esphome."climate-sense-bmp280": 
@@ -37,6 +37,7 @@ i2c:
   scan: false
 
 ota:
+  password: !secret ota_password
   on_begin:
     then:
       - lambda: |-
