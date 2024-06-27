@@ -15,7 +15,7 @@ esphome:
 
   project:
     name: esphome.climate-sense-bme280
-    version: "0.6"
+    version: "0.7"
 
 packages:
   esphome."climate-sense-bmp280": 
@@ -26,6 +26,7 @@ packages:
 
 # Enable logging
 logger:
+  level: WARN  # Reduce logging level
 
 # Enable Home Assistant API
 api:
@@ -36,10 +37,15 @@ i2c:
   scan: false
 
 ota:
+  on_begin:
+    then:
+      - lambda: |-
+          id(deep_sleep_control).turn_off();
 
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+  power_save_mode: light  # Enable Wi-Fi power save mode
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
@@ -50,8 +56,9 @@ captive_portal:
 
 # Sleep to reduce the thermal impact of the MCU so close to the sensor
 deep_sleep:
-  run_duration: 30s
-  sleep_duration: 2min
+  id: deep_sleep_control
+  run_duration: 20s  # Reduce active duration
+  sleep_duration: 3min  # Increase sleep duration
 
 sensor:
   - platform: bme280_i2c
@@ -65,10 +72,20 @@ sensor:
       name: "${name} Humidity"
       oversampling: 16x
     address: 0x76
-    update_interval: 60s
+    update_interval: 180s  # Adjust to match sleep duration
 
 output:
   - platform: gpio
     pin: 15
     inverted: false
     id: grove_power
+
+interval:
+  - interval: 60s
+    then:
+      - lambda: |-
+          if (id(ota).status() != OTA_IDLE) {
+            id(deep_sleep_control).turn_off();
+          } else {
+            id(deep_sleep_control).turn_on();
+          }
