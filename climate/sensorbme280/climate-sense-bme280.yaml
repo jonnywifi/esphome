@@ -12,6 +12,21 @@ esphome:
     priority: -10
     then:
       - output.turn_on: grove_power
+      - homeassistant.service:
+          service: input_boolean.turn_on
+          data:
+            entity_id: input_boolean.block_esphome_sleep
+      - delay: 5s  # Wait a few seconds to ensure Home Assistant is ready
+      - homeassistant.state:
+          id: block_sleep_state
+          entity_id: input_boolean.block_esphome_sleep
+      - lambda: |-
+          if (id(block_sleep_state).state == "on") {
+            id(deep_sleep_control).prevent();
+            ESP_LOGD("main", "Deep sleep is prevented due to Block ESPHome Sleep being ON.");
+          } else {
+            ESP_LOGD("main", "Deep sleep is allowed.");
+          }
 
   project:
     name: esphome.climate-sense-bme280
@@ -24,6 +39,9 @@ logger:
 # Enable Home Assistant API
 api:
 
+homeassistant:
+  # This will allow ESPHome to connect to Home Assistant and check the state of the virtual switch
+
 i2c:
   # sda: D2
   # scl: D1
@@ -31,6 +49,7 @@ i2c:
 
 # Uncomment the OTA section to enable OTA updates
 # ota:
+#   platform: esphome
 #   password: !secret ota_password
 #   on_begin:
 #     then:
