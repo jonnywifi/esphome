@@ -15,7 +15,7 @@ esphome:
 
   project:
     name: esphome.climate-sense-bme280
-    version: "0.6"
+    version: "0.7"
 
 # packages:
 #   esphome."climate-sense-bmp280": 
@@ -37,11 +37,13 @@ i2c:
   scan: false
 
 ota:
-  password: !secret ota_password
-  on_begin:
-    then:
-      - lambda: |-
-          id(deep_sleep_control).turn_off();
+  - platform: esphome
+    id: my_ota
+    safe_mode: true
+    password: !secret ota_password
+    on_begin:
+      then:
+        - deep_sleep.prevent: deep_sleep_control
 
 wifi:
   ssid: !secret wifi_ssid
@@ -85,7 +87,7 @@ interval:
   - interval: 60s
     then:
       - lambda: |-
-          if (id(ota).status() != OTA_IDLE) {
+          if (id(my_ota).status() != OTA_IDLE) {
             id(deep_sleep_control).turn_off();
           } else {
             id(deep_sleep_control).turn_on();
