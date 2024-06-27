@@ -17,12 +17,12 @@ esphome:
     name: esphome.climate-sense-bme280
     version: "0.7"
 
-packages:
-  esphome."climate-sense-bmp280": 
-    url: https://github.com/jonnywifi/esphome
-    ref: main
-    files: [climate/sensorbme280/climate-sense-bme280.yaml]
-    refresh: 0d
+# packages:
+#   esphome."climate-sense-bmp280": 
+#     url: https://github.com/jonnywifi/esphome
+#     ref: main
+#     files: [climate/sensorbme280/climate-sense-bme280.yaml]
+#     refresh: 0d
 
 # Enable logging
 logger:
