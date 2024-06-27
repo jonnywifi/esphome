@@ -17,13 +17,6 @@ esphome:
     name: esphome.climate-sense-bme280
     version: "0.7"
 
-# packages:
-#   esphome."climate-sense-bmp280": 
-#     url: https://github.com/jonnywifi/esphome
-#     ref: main
-#     files: [climate/sensorbme280/climate-sense-bme280.yaml]
-#     refresh: 0d
-
 # Enable logging
 logger:
   level: WARN  # Reduce logging level
@@ -37,13 +30,10 @@ i2c:
   scan: false
 
 # ota:
-#   - platform: esphome
-#     id: my_ota
-#     safe_mode: true
-#     password: !secret ota_password
-#     on_begin:
-#       then:
-#         - deep_sleep.prevent: deep_sleep_control
+#   password: !secret ota_password
+#   on_begin:
+#     then:
+#       - deep_sleep.prevent: deep_sleep_control
 
 wifi:
   ssid: !secret wifi_ssid
@@ -87,8 +77,8 @@ interval:
   - interval: 60s
     then:
       - lambda: |-
-          if (id(my_ota).status() != OTA_IDLE) {
-            id(deep_sleep_control).turn_off();
+          if (id(deep_sleep_control).is_prevented()) {
+            ESP_LOGD("main", "Deep sleep is prevented due to OTA.");
           } else {
-            id(deep_sleep_control).turn_on();
+            ESP_LOGD("main", "Deep sleep is enabled.");
           }
