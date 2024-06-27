@@ -9,17 +9,17 @@ esphome:
   board: wio_node
 
   on_boot:
-    output.turn_on: grove_power
+    priority: -10
+    then:
+      - output.turn_on: grove_power
 
-  # This will allow for (future) project identification,
-  # configuration and updates.
   project:
-    name: esphome.climate-sense-bmp280
+    name: esphome.climate-sense-bme280
     version: "0.6"
-  
-# This should point to the public location of this yaml file.
-dashboard_import:
-  package_import_url: github://jonnywifi/esphome/climate/sensorbmp280/climate-sense-bmp280.yaml
+
+external_components:
+  - source: github://jonnywifi/esphome/climate/sensorbme280
+    refresh: 60s
 
 # Enable logging
 logger:
@@ -28,15 +28,15 @@ logger:
 api:
 
 i2c:
-#  sda: D2
-#  scl: D1
+  sda: D2
+  scl: D1
   scan: false
 
 ota:
 
 wifi:
-  # ssid: 'YOURSSID'
-  # password: 'YOURWIFIPASSWORD'
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
@@ -45,26 +45,27 @@ wifi:
 
 captive_portal:
 
-# Sleep to reduce the thermal impact of the MCU so close ot the sensor
+# Sleep to reduce the thermal impact of the MCU so close to the sensor
 deep_sleep:
   run_duration: 30s
-  sleep_duration: 5min
+  sleep_duration: 2min
 
 sensor:
-  - platform: bme280
+  - platform: bme280_i2c
     temperature:
-      name: ${name} Temperature
+      name: "${name} Temperature"
       oversampling: 16x
     pressure:
-      name: ${name} Pressure
+      name: "${name} Pressure"
+      oversampling: 16x
     humidity:
-      name: ${name} Humidity
+      name: "${name} Humidity"
+      oversampling: 16x
     address: 0x76
-    update_interval: 10s
+    update_interval: 60s
 
 output:
   - platform: gpio
     pin: 15
     inverted: false
     id: grove_power
-    
