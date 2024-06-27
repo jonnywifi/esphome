@@ -32,8 +32,8 @@ logger:
 api:
 
 i2c:
-  sda: D2
-  scl: D1
+  # sda: D2
+  # scl: D1
   scan: false
 
 # ota:
