@@ -31,7 +31,7 @@ esphome:
 
 # Enable logging
 logger:
-  level: DEBUG # WARN  # Reduce logging level
+  level: WARN  # Reduce logging level
 
 # Enable Home Assistant API
 api:
@@ -63,12 +63,12 @@ wifi:
   password: !secret wifi_password
   power_save_mode: light  # Enable Wi-Fi power save mode
 
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: ${name}
-    password: "12345678"
+#   # Enable fallback hotspot (captive portal) in case wifi connection fails
+#   ap:
+#     ssid: ${name}
+#     password: "12345678"
 
-captive_portal:
+# captive_portal:
 
 # Sleep to reduce the thermal impact of the MCU so close to the sensor
 deep_sleep:
