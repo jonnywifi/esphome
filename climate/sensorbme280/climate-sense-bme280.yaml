@@ -49,7 +49,7 @@ text_sensor:
 i2c:
   # sda: D2
   # scl: D1
-  scan: true
+  scan: false
 
 # Uncomment the OTA section to enable OTA updates
 ota:
@@ -91,7 +91,7 @@ sensor:
     humidity:
       name: "${name} Humidity"
       id: bme280_humidity
-    address: 0x08
+    address: 0x76
     update_interval: 15s  # Adjust to match sleep duration
     # icon: 'mdi:signal'
     # unit_of_measurement: 'm'
