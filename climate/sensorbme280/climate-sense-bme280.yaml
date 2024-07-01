@@ -27,6 +27,7 @@ esphome:
       - wait_until:
         - api.connected
       - delay: 5s
+      - output.turn_on: grove_power
 
   project:
     name: esphome.climate-sense-bme280
