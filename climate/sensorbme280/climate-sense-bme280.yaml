@@ -24,6 +24,9 @@ esphome:
   #         } else {
   #           ESP_LOGD("main", "Deep sleep is allowed.");
   #         }
+      - wait_until:
+        - api.connected
+      - delay: 5s
 
   project:
     name: esphome.climate-sense-bme280
