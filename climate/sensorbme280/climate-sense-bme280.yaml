@@ -91,7 +91,7 @@ sensor:
     humidity:
       name: "${name} Humidity"
       id: bme280_humidity
-    address: 0x76
+    address: 0x08
     update_interval: 15s  # Adjust to match sleep duration
     # icon: 'mdi:signal'
     # unit_of_measurement: 'm'
