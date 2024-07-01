@@ -54,12 +54,12 @@ i2c:
 ota:
   platform: esphome
   password: !secret ota_password
-  on_begin:
-    then:
-      - deep_sleep.prevent: deep_sleep_control
-  on_end:
-    then:
-      - deep_sleep.allow: deep_sleep_control
+  # on_begin:
+  #   then:
+  #     - deep_sleep.prevent: deep_sleep_control
+  # on_end:
+  #   then:
+  #     - deep_sleep.allow: deep_sleep_control
 
 wifi:
   ssid: !secret wifi_ssid
