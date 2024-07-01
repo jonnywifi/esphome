@@ -49,7 +49,7 @@ i2c:
 
 # Uncomment the OTA section to enable OTA updates
 ota:
-#   platform: esphome
+  platform: esphome
 #   password: !secret ota_password
 #   on_begin:
 #     then:
