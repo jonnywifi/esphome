@@ -84,13 +84,13 @@ sensor:
   - platform: bme280_i2c
     temperature:
       name: "${name} Temperature"
-      oversampling: 16x
+      id: bme280_temperature
     pressure:
       name: "${name} Pressure"
-      oversampling: 16x
+      id: bme280_pressure
     humidity:
       name: "${name} Humidity"
-      oversampling: 16x
+      id: bme280_humidity
     address: 0x76
     update_interval: 15s  # Adjust to match sleep duration
     # icon: 'mdi:signal'
