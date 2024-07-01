@@ -45,7 +45,7 @@ text_sensor:
 i2c:
   # sda: D2
   # scl: D1
-  scan: false
+  scan: true
 
 # Uncomment the OTA section to enable OTA updates
 ota:
