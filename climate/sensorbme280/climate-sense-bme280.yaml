@@ -50,13 +50,13 @@ i2c:
 # Uncomment the OTA section to enable OTA updates
 ota:
   platform: esphome
-#   password: !secret ota_password
-#   on_begin:
-#     then:
-#       - deep_sleep.prevent: deep_sleep_control
-#   on_end:
-#     then:
-#       - deep_sleep.allow: deep_sleep_control
+  password: !secret ota_password
+  on_begin:
+    then:
+      - deep_sleep.prevent: deep_sleep_control
+  on_end:
+    then:
+      - deep_sleep.allow: deep_sleep_control
 
 wifi:
   ssid: !secret wifi_ssid
@@ -88,7 +88,21 @@ sensor:
       name: "${name} Humidity"
       oversampling: 16x
     address: 0x76
-    update_interval: 180s  # Adjust to match sleep duration
+    update_interval: 15s  # Adjust to match sleep duration
+    icon: 'mdi:signal'
+    unit_of_measurement: 'm'
+  - platform: absolute_humidity
+    name: "Absolute Humidity"
+    temperature: bme280_temperature
+    humidity: bme280_humidity
+  - platform: template
+    name: "Dew Point"
+    lambda: |-
+      return (243.5*(log(id(bme280_humidity).state/100)+((17.67*id(bme280_temperature).state)/
+      (243.5+id(bme280_temperature).state)))/(17.67-log(id(bme280_humidity).state/100)-
+      ((17.67*id(bme280_temperature).state)/(243.5+id(bme280_temperature).state))));
+    unit_of_measurement: °F
+    icon: 'mdi:thermometer-alert'
 
 output:
   - platform: gpio
