@@ -8,22 +8,22 @@ esphome:
   platform: ESP8266
   board: wio_node
 
-  on_boot:
-    priority: -10
-    then:
-      - output.turn_on: grove_power
-      - delay: 5s  # Wait a few seconds to ensure Home Assistant is ready
-      - homeassistant.service:
-          service: homeassistant.update_entity
-          data:
-            entity_id: input_boolean.block_esphome_sleep
-      - lambda: |-
-          if (id(block_sleep_state).state == "on") {
-            id(deep_sleep_control).prevent();
-            ESP_LOGD("main", "Deep sleep is prevented due to Block ESPHome Sleep being ON.");
-          } else {
-            ESP_LOGD("main", "Deep sleep is allowed.");
-          }
+  # on_boot:
+  #   priority: -10
+  #   then:
+  #     - output.turn_on: grove_power
+  #     - delay: 5s  # Wait a few seconds to ensure Home Assistant is ready
+  #     - homeassistant.service:
+  #         service: homeassistant.update_entity
+  #         data:
+  #           entity_id: input_boolean.block_esphome_sleep
+  #     - lambda: |-
+  #         if (id(block_sleep_state).state == "on") {
+  #           id(deep_sleep_control).prevent();
+  #           ESP_LOGD("main", "Deep sleep is prevented due to Block ESPHome Sleep being ON.");
+  #         } else {
+  #           ESP_LOGD("main", "Deep sleep is allowed.");
+  #         }
 
   project:
     name: esphome.climate-sense-bme280
@@ -48,7 +48,7 @@ i2c:
   scan: false
 
 # Uncomment the OTA section to enable OTA updates
-# ota:
+ota:
 #   platform: esphome
 #   password: !secret ota_password
 #   on_begin:
