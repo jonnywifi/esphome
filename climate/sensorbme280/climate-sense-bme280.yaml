@@ -71,10 +71,10 @@ wifi:
 # captive_portal:
 
 # Sleep to reduce the thermal impact of the MCU so close to the sensor
-deep_sleep:
-  id: deep_sleep_control
-  run_duration: 20s  # Reduce active duration
-  sleep_duration: 3min  # Increase sleep duration
+# deep_sleep:
+#   id: deep_sleep_control
+#   run_duration: 20s  # Reduce active duration
+#   sleep_duration: 3min  # Increase sleep duration
 
 sensor:
   - platform: bme280_i2c
