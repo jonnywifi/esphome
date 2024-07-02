@@ -9,11 +9,16 @@ esphome:
   board: wio_node
 
   on_boot:
-    priority: 1100
+    priority: 600
     then:
+      - lambda: |-
+          Wire.begin();
+          delay(100); 
+    # priority: 1100
+    # then:
       - output.turn_on: grove_power
       - delay: 5s  # Wait a few seconds to ensure Home Assistant is ready
-      # - homeassistant.service:
+    #   # - homeassistant.service:
       #     service: homeassistant.update_entity
       #     data:
       #       entity_id: input_boolean.block_esphome_sleep
