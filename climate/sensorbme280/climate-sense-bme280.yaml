@@ -47,9 +47,7 @@ text_sensor:
     entity_id: input_boolean.block_esphome_sleep
 
 i2c:
-  # sda: D2
-  # scl: D1
-  scan: false
+  scan: true
 
 # Uncomment the OTA section to enable OTA updates
 ota:
@@ -92,7 +90,7 @@ sensor:
       name: "${name} Humidity"
       id: bme280_humidity
     address: 0x76
-    update_interval: 15s  # Adjust to match sleep duration
+    # update_interval: 15s  # Adjust to match sleep duration
     # icon: 'mdi:signal'
     # unit_of_measurement: 'm'
   # - platform: absolute_humidity
@@ -113,3 +111,4 @@ output:
     pin: 15
     inverted: false
     id: grove_power
+    
