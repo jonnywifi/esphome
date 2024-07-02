@@ -12,7 +12,7 @@ esphome:
     priority: 1100
     then:
       - output.turn_on: grove_power
-      # - delay: 5s  # Wait a few seconds to ensure Home Assistant is ready
+      - delay: 5s  # Wait a few seconds to ensure Home Assistant is ready
       # - homeassistant.service:
       #     service: homeassistant.update_entity
       #     data:
@@ -27,7 +27,7 @@ esphome:
       # - wait_until:
       #   - api.connected
       # - delay: 5s
-    # output.turn_on: grove_power
+      - output.turn_on: grove_power
 
   project:
     name: esphome.climate-sense-bme280
