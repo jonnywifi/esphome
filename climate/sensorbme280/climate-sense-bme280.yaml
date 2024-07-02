@@ -9,7 +9,7 @@ esphome:
   board: wio_node
 
   on_boot:
-    priority: 1001
+    priority: 1100
     then:
       - output.turn_on: grove_power
       # - delay: 5s  # Wait a few seconds to ensure Home Assistant is ready
