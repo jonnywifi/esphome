@@ -5,7 +5,8 @@ substitutions:
 esphome:
   name: "${name}"
   name_add_mac_suffix: true
-  platform: ESP8266
+
+esp8266:
   board: wio_node
 
   on_boot:
@@ -37,7 +38,7 @@ esphome:
 
   project:
     name: esphome.climate-sense-bme280
-    version: "0.7"
+    version: "0.8"
 
 # Enable logging
 logger:
