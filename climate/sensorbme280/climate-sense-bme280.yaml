@@ -6,35 +6,23 @@ esphome:
   name: "${name}"
   name_add_mac_suffix: true
 
-esp8266:
-  board: wio_node
-
   on_boot:
     priority: 1200
     then:
       - lambda: |-
           Wire.begin();
-          delay(100); 
-    # priority: 1100
-    # then:
-      - delay: 5s  # Wait a few seconds to ensure Home Assistant is ready
+          delay(100);
+      - delay: 5s
       - output.turn_on: grove_power
-      - delay: 5s  # Wait a few seconds to ensure Home Assistant is ready
-    #   # - homeassistant.service:
-      #     service: homeassistant.update_entity
-      #     data:
-      #       entity_id: input_boolean.block_esphome_sleep
-  #     - lambda: |-
-  #         if (id(block_sleep_state).state == "on") {
-  #           id(deep_sleep_control).prevent();
-  #           ESP_LOGD("main", "Deep sleep is prevented due to Block ESPHome Sleep being ON.");
-  #         } else {
-  #           ESP_LOGD("main", "Deep sleep is allowed.");
-  #         }
-      # - wait_until:
-      #   - api.connected
-      # - delay: 5s
+      - delay: 5s
       - output.turn_on: grove_power
+
+  project:
+    name: esphome.climate-sense-bme280
+    version: "0.81"
+
+esp8266:
+  board: wio_node
 
   project:
     name: esphome.climate-sense-bme280
