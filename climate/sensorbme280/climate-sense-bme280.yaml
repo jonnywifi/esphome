@@ -1,79 +1,66 @@
 substitutions:
   name: climate-sense-bmp280
   friendly_name: Temp Humidity Pressure Sensor
+  sleep_block_entity: input_boolean.block_esphome_sleep
 
 esphome:
   name: "${name}"
   name_add_mac_suffix: true
-
   on_boot:
-    priority: 1200
     then:
       - lambda: |-
           Wire.begin();
-          delay(100);
-      - delay: 5s
       - output.turn_on: grove_power
-      - delay: 5s
-      - output.turn_on: grove_power
-
   project:
     name: esphome.climate-sense-bme280
-    version: "0.82"
+    version: "0.9"
 
 esp8266:
   board: wio_node
 
-# Enable logging
 logger:
-  level: DEBUG # WARN  # Reduce logging level
+  level: WARN
 
-# Enable Home Assistant API
 api:
+  reboot_timeout: 0s
+
+safe_mode:
+
+ota:
+  platform: esphome
+  password: !secret ota_password
+  on_begin:
+    then:
+      - deep_sleep.prevent: deep_sleep_control
+  on_end:
+    then:
+      - deep_sleep.allow: deep_sleep_control
 
 text_sensor:
   - platform: homeassistant
     name: "Block ESPHome Sleep State"
     id: block_sleep_state
-    entity_id: input_boolean.block_esphome_sleep
+    entity_id: ${sleep_block_entity}
+    on_value:
+      then:
+        - if:
+            condition:
+              lambda: 'return id(block_sleep_state).state == "on";'
+            then:
+              - deep_sleep.prevent: deep_sleep_control
+            else:
+              - deep_sleep.allow: deep_sleep_control
 
 i2c:
   scan: true
-
-# Uncomment the OTA section to enable OTA updates
-ota:
-  platform: esphome
-  password: !secret ota_password
-  # on_begin:
-  #   then:
-  #     - deep_sleep.prevent: deep_sleep_control
-  # on_end:
-  #   then:
-  #     - deep_sleep.allow: deep_sleep_control
-
-# wifi:
-#   ssid: !secret wifi_ssid
-#   password: !secret wifi_password
-#   power_save_mode: light  # Enable Wi-Fi power save mode
-
-#   # Enable fallback hotspot (captive portal) in case wifi connection fails
-#   ap:
-#     ssid: ${name}
-#     password: "12345678"
-
-# captive_portal:
-
-# Sleep to reduce the thermal impact of the MCU so close to the sensor
-# deep_sleep:
-#   id: deep_sleep_control
-#   run_duration: 20s  # Reduce active duration
-#   sleep_duration: 3min  # Increase sleep duration
 
 sensor:
   - platform: bme280_i2c
     temperature:
       name: "${name} Temperature"
       id: bme280_temperature
+      filters:
+        - offset: -1.0   # tune against a reference thermometer at steady state
     pressure:
       name: "${name} Pressure"
       id: bme280_pressure
@@ -81,25 +68,15 @@ sensor:
       name: "${name} Humidity"
       id: bme280_humidity
     address: 0x76
-    # update_interval: 15s  # Adjust to match sleep duration
-    # icon: 'mdi:signal'
-    # unit_of_measurement: 'm'
-  # - platform: absolute_humidity
-  #   name: "Absolute Humidity"
-  #   temperature: bme280_temperature
-  #   humidity: bme280_humidity
-  # - platform: template
-  #   name: "Dew Point"
-  #   lambda: |-
-  #     return (243.5*(log(id(bme280_humidity).state/100)+((17.67*id(bme280_temperature).state)/
-  #     (243.5+id(bme280_temperature).state)))/(17.67-log(id(bme280_humidity).state/100)-
-  #     ((17.67*id(bme280_temperature).state)/(243.5+id(bme280_temperature).state))));
-  #   unit_of_measurement: °F
-  #   icon: 'mdi:thermometer-alert'
+    update_interval: 10s
 
 output:
   - platform: gpio
     pin: 15
     inverted: false
     id: grove_power
-    
+
+deep_sleep:
+  id: deep_sleep_control
+  run_duration: 30s
+  sleep_duration: 5min
