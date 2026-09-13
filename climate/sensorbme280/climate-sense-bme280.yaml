@@ -7,18 +7,18 @@ esphome:
   name: "${name}"
   name_add_mac_suffix: true
   on_boot:
-    # Must run before the i2c bus sets up (priority 1000/BUS) so grove_power
-    # is live before anything tries to talk to the BME280 on it - otherwise
-    # the i2c scan/setup hits an unpowered sensor, the bus can hang, and the
-    # device soft-WDT resets during early boot.
-    priority: 1200.0
+    # # Must run before the i2c bus sets up (priority 1000/BUS) so grove_power
+    # # is live before anything tries to talk to the BME280 on it - otherwise
+    # # the i2c scan/setup hits an unpowered sensor, the bus can hang, and the
+    # # device soft-WDT resets during early boot.
+    # priority: 1200.0
     then:
       - lambda: |-
           Wire.begin();
       - output.turn_on: grove_power
   project:
     name: esphome.climate-sense-bme280
-    version: "0.91"
+    version: "0.9"
 
 esp8266:
   board: wio_node
