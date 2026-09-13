@@ -18,7 +18,7 @@ esphome:
       - output.turn_on: grove_power
   project:
     name: esphome.climate-sense-bme280
-    version: "0.9"
+    version: "0.91"
 
 esp8266:
   board: wio_node
@@ -58,6 +58,7 @@ text_sensor:
 
 i2c:
   scan: true
+  timeout: 200ms
 
 sensor:
   - platform: bme280_i2c
